@@ -5,6 +5,8 @@
     <title>Detalle del Estudiante #{{ $student->id }}</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .prediction-result {
             margin-top: 10px;
@@ -12,13 +14,17 @@
             padding: 10px;
         }
     </style>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="container mt-5">
         <h1>Detalle del Estudiante #{{ $student->id }}</h1>
         <p><strong>Género:</strong> {{ $student->gender->name }}</p>
         <p><strong>Tipo de Escuela:</strong> {{ $student->schoolType->name }}</p>
-        
+
         <h2>Registros de Desempeño</h2>
         <table class="table table-bordered">
             <thead>
@@ -88,7 +94,7 @@
                     let html = '<table class="table table-sm table-bordered"><thead><tr><th>Predicción</th><th>Tiempo (ms)</th></tr></thead><tbody>';
                     html += `<tr><td>${data.prediction}</td><td>${data.processing_time_ms}</td></tr>`;
                     html += '</tbody></table>';
-                    
+
                     // Insertar el resultado y mostrar la fila
                     const resultDiv = document.getElementById(`prediction-result-${recordId}`);
                     resultDiv.innerHTML = html;

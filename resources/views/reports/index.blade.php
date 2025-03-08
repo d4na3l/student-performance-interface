@@ -5,6 +5,8 @@
     <title>Reporte de Estudiantes</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .prediction-result {
             margin-top: 10px;
@@ -12,25 +14,21 @@
             padding: 10px;
         }
     </style>
-    <script>
-    // Función para seleccionar o deseleccionar todos los checkboxes
-    function toggleSelectAll(source) {
-        let checkboxes = document.getElementsByName('record_ids[]');
-        for(let i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].checked = source.checked;
-        }
-    }
-    </script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Reporte de Estudiantes</h1>
+        <h1 style="text-align: center">Reporte de Estudiantes</h1>
+        <br>
         <!-- Formulario para enviar registros seleccionados en lote -->
         <form action="{{ route('reports.batchPredict') }}" method="POST">
             @csrf
             <button type="submit" class="btn btn-success mb-3">Generar Reporte en PDF para registros seleccionados</button>
             <table class="table table-bordered">
-                <thead>
+                <thead class="thead-dark">
                     <tr>
                         <th><input type="checkbox" onClick="toggleSelectAll(this)"></th>
                         <th>ID Estudiante</th>
@@ -43,7 +41,7 @@
                     @foreach($students as $student)
                     <tr>
                         <td colspan="5">
-                            <a href="{{ route('student.show', ['id' => $student->id]) }}"">
+                            <a href="{{ route('student.show', ['id' => $student->id]) }}">
                                 <strong>Estudiante #{{ $student->id }}</strong>
                             </a>
                              – Género: {{ $student->gender->name }} – Escuela: {{ $student->schoolType->name }}
@@ -98,7 +96,7 @@
             </table>
         </form>
     </div>
-    
+
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const predictButtons = document.querySelectorAll('.predict-btn');

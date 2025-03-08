@@ -73,7 +73,7 @@ class ReportController extends Controller
         if (empty($selectedRecords)) {
             return redirect()->back()->with('error', 'No se seleccionaron registros para el lote.');
         }
-        
+
         $studentsPayload = [];
         foreach ($selectedRecords as $recordId) {
             $record = PerformanceRecord::with([
@@ -89,7 +89,7 @@ class ReportController extends Controller
                     $query->with(['gender', 'schoolType']);
                 }
             ])->findOrFail($recordId);
-            
+
             $student = $record->student;
             $payload = [
                 "Hours_Studied"              => $record->hours_studied,
@@ -111,21 +111,21 @@ class ReportController extends Controller
             ];
             $studentsPayload[] = $payload;
         }
-        
+
         $payloadBody = [
             "students" => $studentsPayload
         ];
-        
+
         // Llamar al endpoint batch con los parámetros solicitados
         $apiUrl = env('API_BASE_URL') . '/performance/predictions/batch?detailed_results=true&include_categories=true';
         $response = Http::post($apiUrl, $payloadBody);
-        
+
         if (!$response->successful()) {
             return redirect()->back()->with('error', 'Error al consumir la API de predicciones en lote.');
         }
-        
+
         $data = $response->json();
-        
+
         // Generar PDF usando la librería instalada (por ejemplo, barryvdh/laravel-dompdf)
         $pdf = \PDF::loadView('reports.batch_report', compact('data'));
         return $pdf->download('batch_report.pdf');
