@@ -40,19 +40,14 @@
                 <tbody>
                     @foreach($students as $student)
                     <tr>
-                        <td colspan="5">
-                            <a href="{{ route('student.show', ['id' => $student->id]) }}">
-                                <strong>Estudiante #{{ $student->id }}</strong>
-                            </a>
-                             – Género: {{ $student->gender->name }} – Escuela: {{ $student->schoolType->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="5">
+                        <td><input type="checkbox" name="student_ids[]" value="{{ $student->id }}"></td>
+                        <td>{{ $student->id }}</td>
+                        <td>{{ $student->gender->name }}</td>
+                        <td>{{ $student->schoolType->name }}</td>
+                        <td>
                             <table class="table table-sm">
                                 <thead>
                                     <tr>
-                                        <th></th>
                                         <th>Horas de Estudio</th>
                                         <th>Asistencia</th>
                                         <th>Puntuación Anterior</th>
@@ -62,9 +57,6 @@
                                 <tbody>
                                     @foreach($student->performanceRecords as $record)
                                     <tr>
-                                        <td>
-                                            <input type="checkbox" name="record_ids[]" value="{{ $record->id }}">
-                                        </td>
                                         <td>{{ $record->hours_studied }}</td>
                                         <td>{{ $record->attendance }}</td>
                                         <td>{{ $record->previous_scores }}</td>
@@ -80,7 +72,7 @@
                                     </tr>
                                     <!-- Fila para mostrar el resultado individual de predicción -->
                                     <tr id="prediction-row-{{ $record->id }}" style="display:none;">
-                                        <td colspan="6">
+                                        <td colspan="4">
                                             <div class="prediction-result" id="prediction-result-{{ $record->id }}">
                                                 <!-- Se insertará la tabla del resultado individual -->
                                             </div>
